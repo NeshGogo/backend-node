@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const response = require('./network/response.js');
+
 const router = express.Router();
 
 let app = express();
@@ -13,7 +15,10 @@ app.use(router);
 
 
 router.get('/message', (req, res) => {
-  res.send('Lista de mensajes');
+  console.log(req.headers);
+  res.header({"custom-header": 'Esto es una prueba de nuestro propio header.'})
+  // res.send('Lista de mensajes');
+  response.success(req, res, 'Lista de mensajes', 205);
 })
 
 router.post('/message', (req, res) => {
@@ -24,7 +29,11 @@ router.post('/message', (req, res) => {
 })
 
 router.put('/message', (req, res) => {
-  res.send('Actualizando un nuevo mensaje');
+  if(req.query.ok === 200){
+    response.success(req, res, 'Mensaje actualizado', 205);
+  }else{
+    response.error(req, res, 'Ocurrio un error al intentar actualizar', 500);
+  }
 })
 
 router.delete('/message', (req, res) => {
