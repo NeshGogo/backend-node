@@ -40,5 +40,7 @@ router.delete('/message', (req, res) => {
   res.send('Eliminando un nuevo mensaje');
 })
 
+app.use('/app', express.static('public'))
+
 app.listen(3000);
 console.log('La aplicacion esta escuchando en el puerto http://localhost:3000');
