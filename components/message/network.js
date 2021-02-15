@@ -5,10 +5,13 @@ const controller = require('./controller');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  console.log(req.headers);
-  res.header({"custom-header": 'Esto es una prueba de nuestro propio header.'})
-  // res.send('Lista de mensajes');
-  response.success(req, res, 'Lista de mensajes', 205);
+  controller.getMessages()
+  .then( (messages) => {
+    response.success(req, res, messages, 200);
+  })
+  .catch( (error) => {
+    response.error(req, res, 'Unexpected Error', 500, error);
+  })
 })
 
 router.post('/', (req, res) => {
