@@ -2,8 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const response = require('./network/response.js');
 
-const router = express.Router();
 
+// const router = require('./components/message/network');
+
+const router = require('./network/routers');
 let app = express();
 
 // app.use('/', (req, res) => {
@@ -11,34 +13,11 @@ let app = express();
 // })
 
 app.use(bodyParser.json());
-app.use(router);
+// app.use(router);
+
+router(app);
 
 
-router.get('/message', (req, res) => {
-  console.log(req.headers);
-  res.header({"custom-header": 'Esto es una prueba de nuestro propio header.'})
-  // res.send('Lista de mensajes');
-  response.success(req, res, 'Lista de mensajes', 205);
-})
-
-router.post('/message', (req, res) => {
-  const body = req.body;
-  const query = req.query;
-  console.log(body, query);
-  res.send({from: query, body});
-})
-
-router.put('/message', (req, res) => {
-  if(req.query.ok === 200){
-    response.success(req, res, 'Mensaje actualizado', 205);
-  }else{
-    response.error(req, res, 'Ocurrio un error en el servidor', 500, 'Ocurrio un error al actualizar la informacion de base de datos, id suministrado es incorrecto');
-  }
-})
-
-router.delete('/message', (req, res) => {
-  res.send('Eliminando un nuevo mensaje');
-})
 
 app.use('/app', express.static('public'))
 
