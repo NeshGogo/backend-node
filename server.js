@@ -32,7 +32,7 @@ router.put('/message', (req, res) => {
   if(req.query.ok === 200){
     response.success(req, res, 'Mensaje actualizado', 205);
   }else{
-    response.error(req, res, 'Ocurrio un error al intentar actualizar', 500);
+    response.error(req, res, 'Ocurrio un error en el servidor', 500, 'Ocurrio un error al actualizar la informacion de base de datos, id suministrado es incorrecto');
   }
 })
 
