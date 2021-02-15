@@ -1,5 +1,6 @@
 const express = require('express');
 const response = require('../../network/response');
+const controller = require('./controller');
 
 const router = express.Router();
 
@@ -12,9 +13,13 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const body = req.body;
-  const query = req.query;
-  console.log(body, query);
-  res.send({from: query, body});
+  controller.addMessage(body.user, body.message)
+  .then( (fullMessage) => {
+    response.success(req, res, fullMessage, 201);
+  })
+  .catch((error) => {
+    response.error(req, res, error, 500);
+  })
 })
 
 router.put('/', (req, res) => {
