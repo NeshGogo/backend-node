@@ -12,6 +12,27 @@ const addUser = (name)=> {
   return store.add(user);
 }
 
+const getUsers = ()=> {
+  return store.list();
+}
+
+const updateUser = (id, name)=> {
+  if(!name || !id){
+    return Promise.reject('miss name or id');
+  }
+  return store.update(id, name);
+}
+
+const removeUser = (id) => {
+  if(!id){
+    return Promise.reject('missid');
+  }
+  return store.remove(id);
+}
+
 module.exports = {
-  addUser
+  addUser,
+  removeUser,
+  getUsers,
+  updateUser,
 }
