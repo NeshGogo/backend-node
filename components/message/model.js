@@ -9,10 +9,15 @@ const mySchema = new Schema(
       type: Schema.ObjectId,
       ref: 'user',
     },
+    chat: {
+      type: Schema.ObjectId,
+      ref: 'chat',
+    },
     message: {
       type: String,
       require: true
     },
+    file: String,
     date: Date
   }
 )

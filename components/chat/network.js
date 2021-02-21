@@ -7,8 +7,8 @@ const router = express.Router();
 router.get('/:userId', (req, res) => {
   const userId = req.params.userId || null;
   controller.getChats(userId)
-    .then((messages) => {
-      response.success(req, res, messages, 200);
+    .then((chat) => {
+      response.success(req, res, chat, 200);
     })
     .catch((error) => {
       response.error(req, res, 'Unexpected Error', 500, error);

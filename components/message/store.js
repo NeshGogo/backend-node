@@ -5,19 +5,13 @@ const add = (message) => {
   myMessage.save();
 }
 
-const list = async (filterByUser) => {
+const list = async (filterByUser, filterByChat) => {
   return new Promise((resolve, reject) => {
-    let filter = {};
-    if (filterByUser !== null) {
-      filter = {
-        // por coincidencia.
-        //user: new RegExp(filterByUser,'i')
-        user: filterByUser
-      };
-    }
-    // Realizando relacion
+    const filter = buildFilter(filterByUser, filterByChat);
+     // Realizando relacion
     Model.find(filter)
     .populate('user')
+    .populate('chat')
     .exec((err, res) => {
       if(err){
         reject(err);
@@ -40,6 +34,25 @@ const update = async (id, message) => {
 
 const remove = (id) => {
   return Model.deleteOne({ _id: id });
+}
+
+const buildFilter = (filterByUser, filterByChat) => {
+  let filter = {};
+  if (filterByUser !== null && filterByChat === null) {
+    filter = {
+      user: filterByUser
+    };
+  } else if(filterByUser !== null && filterByChat !== null){
+    filter = {
+      user: filterByUser,
+      chat: filterByChat,
+    };
+  } else if(filterByUser === null && filterByChat !== null){
+    filter = {
+      chat: filterByChat,
+    };
+  }
+  return filter;
 }
 
 module.exports = {
