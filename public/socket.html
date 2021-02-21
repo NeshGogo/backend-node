@@ -1,0 +1,15 @@
+<html>
+  <body>
+    <h1>Aqui estamos mostrando la funcionalidad de los sockets pero con la API</h1>
+    <p>Mira la consola!!!!!!!!</p>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://localhost:3000', {
+        foreceNew: true,
+      });
+      socket.on('message', (data) => {
+        console.log(data);
+      });
+    </script>
+  </body>
+</html>
