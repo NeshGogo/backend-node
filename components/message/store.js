@@ -6,16 +6,27 @@ const add = (message) => {
 }
 
 const list = async (filterByUser) => {
-  let filter = {};
-  if (filterByUser !== null) {
-    filter = {
-      // por coincidencia.
-      //user: new RegExp(filterByUser,'i')
-      user: filterByUser
-    };
-  }
-  const messages = await Model.find(filter);
-  return messages
+  return new Promise((resolve, reject) => {
+    let filter = {};
+    if (filterByUser !== null) {
+      filter = {
+        // por coincidencia.
+        //user: new RegExp(filterByUser,'i')
+        user: filterByUser
+      };
+    }
+    // Realizando relacion
+    Model.find(filter)
+    .populate('user')
+    .exec((err, res) => {
+      if(err){
+        reject(err);
+        return false;
+      }
+      resolve(res);
+    });
+  })
+
 }
 
 const update = async (id, message) => {

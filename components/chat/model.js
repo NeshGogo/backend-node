@@ -5,10 +5,12 @@ const Schema = mongoose.Schema;
 const mySchema = new Schema(
   {
     //Especificando la relacion
-    user: {
-      type: Schema.ObjectId,
-      ref: 'user',
-    },
+    users: [
+      {
+        type: Schema.ObjectId,
+        ref: 'user',
+      }
+    ],
     message: {
       type: String,
       require: true
@@ -17,6 +19,6 @@ const mySchema = new Schema(
   }
 )
 
-const model = mongoose.model('message', mySchema);
+const model = mongoose.model('chat', mySchema);
 
 module.exports = model;
